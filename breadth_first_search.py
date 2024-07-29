@@ -4,7 +4,6 @@ num_vertices = 4
 
 def create_adjacency_matrix(num_of_vertices, edges):
     matrix = [[0 for _ in range(num_vertices)] for _ in range(num_vertices)]
-    print(matrix)
 
     for edge in edges:
         src, dst = edge
@@ -13,4 +12,16 @@ def create_adjacency_matrix(num_of_vertices, edges):
     return matrix
 
 
-create_adjacency_matrix(num_vertices, edges)
+def create_comp_adjacency_matrix(matrix):
+    num_nodes = len(matrix)
+
+    comp_matrix = [[1 for _ in range(num_nodes)] for _ in range(num_nodes)]
+
+    for i in range(num_nodes):
+        for j in range(num_nodes):
+            if i == j:
+                comp_matrix[i][j] = 0
+            else:
+                comp_matrix[i][j] = 1 - matrix[i][j]
+
+    return comp_matrix
