@@ -6,10 +6,14 @@ num_vertices = 4
 
 # method to create an adjancency matrix
 def create_adjacency_matrix(num_of_vertices, edges):
+
+    # initialize the matrix to all zeroes 
     matrix = [[0 for _ in range(num_vertices)] for _ in range(num_vertices)]
 
     for edge in edges:
-        src, dst = edge
+        src, dst = edge  # unpack the edge tuple into source and destination
+
+        
         matrix[src][dst] = 1
     
     return matrix
@@ -30,8 +34,32 @@ def create_comp_adjacency_matrix(matrix):
 
     return comp_matrix
 
+# method to turn a list of edges into an adjacency list
+def edges_to_adjacency_list(edges):
+    graph = {}  # initialize the graph as a dictionary
+
+    for edge in edges:  
+        src, dest = edge  # unpack the edge tuple into source and destination
+
+        # check if the source vertex is not already in the graph 
+        if src not in graph:
+            graph[src] = []  # add the source vertex to the graph with an empty list as its value
+        
+        # check if the destination vertex is not already in the graph
+        if dest not in graph:
+            graph[dest] = []  # add the destination vertex to the graph with an empty list as its value
+        
+        # add the destination vertex to the adjacency list of the source vertex
+        graph[src].append(dest) 
+
+        # add the source vertex to the adjacency list of the destination vertext
+        # this line is because the graph is undirected, to make graph directed remove the line below
+        graph[dest].append(src)
+    
+    return graph
+
 # breadth first search is a level-wise traversal so it explores nodes by level 
-# breadth first search method
+# breadth first search method with adjacency list as parameter
 def bfs(start_node, graph):
 
     # create a set to hold the visited nodes (set is chosen because no repeat values)
